@@ -88,6 +88,8 @@ class App {
                 App.gameOverScene.visible = false;
                 App.renderer.backgroundColor = 0x1099bb;
                 App.life = 10
+                App.character.x =( this.appWidth / 2) - (App.character.width / 2)
+                App.character.texture = PIXI.Texture.fromImage('./img/knight iso char_idle_0.png')
                 App.createSprites()
             };
         }
