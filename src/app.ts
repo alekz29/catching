@@ -5,6 +5,7 @@ import Human from './human'
 import Container = PIXI.Container;
 import Sprite = PIXI.Sprite;
 import NewText from './text'
+import Keyboard from "./keyboard";
 
 
 class App {
@@ -14,9 +15,11 @@ class App {
     static stage: Container = new PIXI.Container()
     static gameScene = new Container()
     static gameOverScene = new Container();
-    static character: Sprite = new Human('./img/knight iso char_idle_0.png', App.gameScene)
+    static character: Sprite = new Human('./img/knight iso char_idle_0.png', App.gameScene,App.appWidth)
     static spritesList: Array<Fruit> = []
     static life: number = 10
+    static playInterval:number;
+    static playAgain = new Keyboard(32)
 
 
     constructor() {
@@ -34,35 +37,45 @@ class App {
     }
 
     static createSprites() {
-        setInterval(() => {
+       App.playInterval = setInterval(() => {
             const id = Math.floor(Math.random() * 30)
-            const newFruit = new Fruit(id, App.gameScene)
+            const newFruit = new Fruit(id, App.gameScene,App.appWidth)
             App.spritesList = newFruit.getList()
-        }, 1000)
+        }, 2500)
     }
 
     static startGame() {
         requestAnimationFrame(App.startGame);
         App.renderer.render(App.stage);
-        App.fallDownFruits()
+        App.play()
 
     }
 
-    static fallDownFruits() {
+    static play() {
         for (let i = 0; i < App.spritesList.length; i++) {
 
             const x = App.character,
                 v = App.spritesList[i]
             v.move()
-
             App.checkCollision(x, v, i)
+            App.checkEnd()
 
 
-            if (App.life <= 0) {
-                App.gameScene.visible = false;
-                App.gameOverScene.visible = true;
-                App.renderer.backgroundColor = 0x061639;
-            }
+        }
+    }
+    static checkEnd(){
+        if (App.life <= 0) {
+            App.gameScene.visible = false;
+            App.gameOverScene.visible = true;
+            App.renderer.backgroundColor = 0x061639;
+            window.clearInterval(App.playInterval)
+            App.playAgain.press = () => {
+                App.gameScene.visible = true;
+                App.gameOverScene.visible = false;
+                App.renderer.backgroundColor = 0x1099bb;
+                App.life = 10
+                App.createSprites()
+            };
         }
     }
 
@@ -84,7 +97,6 @@ class App {
             actualFruit.destroy()
             list.splice(i, 1)
             App.life -= 1
-            console.log(App.life)
         }
     }
 }

@@ -5,10 +5,10 @@ class Human extends PIXI.Sprite {
     right = new Keyboard(39)
     left = new Keyboard(37)
 
-    constructor(private img: string, parent: Container = null) {
+    constructor(private img: string, parent: Container = null, private appWidth: number) {
         super(PIXI.Texture.fromImage(img))
         this.scale.set(1.5, 1.5)
-        this.x = (400) - (85 * 1.5) / 2//(this.width / 2)
+        this.x = (this.appWidth / 2) - (85 * 1.5) / 2//(this.width / 2)
         this.y = 450
         if (parent) {
             parent.addChild(this)

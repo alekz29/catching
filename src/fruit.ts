@@ -5,11 +5,11 @@ class Fruit extends PIXI.Sprite {
     static fruitsList: Array<Fruit> = []
     fruitsList: Array<Fruit>;
 
-    constructor(private id?: number, parent: Container = null) {
+    constructor(private id?: number, parent: Container = null,private appWidth?:number) {
 
         super(PIXI.Texture.fromFrame(`${id}`),)
         this.scale.set(1.5, 1.5)
-        this.x = Math.random() * (800 - this.width)
+        this.x = Math.random() * (this.appWidth===0?800:this.appWidth - this.width)
         this.y = -Math.random() * 200
         if (parent) {
             parent.addChild(this)
@@ -18,7 +18,7 @@ class Fruit extends PIXI.Sprite {
     }
 
     move() {
-        this.y += 5//1.5
+        this.y += 1.5
 
     }
 
