@@ -5,7 +5,7 @@ class Fruit extends PIXI.Sprite {
     static fruitsList: Array<Fruit> = []
     fruitsList: Array<Fruit>;
 
-    constructor(private id?: number, parent: Container = null,private appWidth?:number,) {
+    constructor(private id: number, parent: Container = null,private appWidth:number,) {
 
         super(PIXI.Texture.fromFrame(`${id}`),)
         this.scale.set(1.5, 1.5)
@@ -23,7 +23,7 @@ class Fruit extends PIXI.Sprite {
     }
 
     fruitsToArray() {
-        this.fruitsList = Fruit.fruitsList = [...Fruit.fruitsList].concat([this])
+        this.fruitsList = Fruit.fruitsList = [...Fruit.fruitsList,this]
     }
 
     getList() {

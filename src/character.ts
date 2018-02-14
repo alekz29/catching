@@ -3,7 +3,7 @@ import Keyboard from "./keyboard";
 import * as PIXI from "pixi.js";
 import Texture = PIXI.Texture;
 
-class Human extends PIXI.Sprite {
+class Character extends PIXI.Sprite {
     right = new Keyboard(39)
     left = new Keyboard(37)
 
@@ -37,15 +37,15 @@ class Human extends PIXI.Sprite {
             parent.addChild(this)
         }
         this.left.press = () => {
-            Human.indexRight = 0
-            Human.indexLeft += 1
-            if (Human.indexLeft > 5) {
-                Human.indexLeft = 0
+            Character.indexRight = 0
+            Character.indexLeft += 1
+            if (Character.indexLeft > 5) {
+                Character.indexLeft = 0
             }
             if (this.x > 0) {
                 this.x -= 15
             }
-            this.texture = Human.loadLeft[Human.indexLeft]
+            this.texture = Character.loadLeft[Character.indexLeft]
         };
 
         this.left.release = () => {
@@ -55,16 +55,16 @@ class Human extends PIXI.Sprite {
         };
         this.right.press = () => {
 
-            Human.indexLeft = 0
-            Human.indexRight += 1
-            if (Human.indexRight > 5) {
-                Human.indexRight = 0
+            Character.indexLeft = 0
+            Character.indexRight += 1
+            if (Character.indexRight > 5) {
+                Character.indexRight = 0
             }
             if (this.x < this.appWidth -this.width/1.2) {
                 this.x += 15
             }
 
-            this.texture = Human.loadRight[Human.indexRight]
+            this.texture = Character.loadRight[Character.indexRight]
         };
 
         this.right.release = () => {
@@ -76,4 +76,4 @@ class Human extends PIXI.Sprite {
 
 }
 
-export default Human
+export default Character
