@@ -18,7 +18,7 @@ class Fruit extends PIXI.Sprite {
     }
 
     move() {
-        this.y += 1.5
+        this.y += 5//1.5
 
     }
 
