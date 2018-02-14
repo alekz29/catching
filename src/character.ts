@@ -60,7 +60,7 @@ class Human extends PIXI.Sprite {
             if (Human.indexRight > 5) {
                 Human.indexRight = 0
             }
-            if (this.x < this.appWidth -this.width) {
+            if (this.x < this.appWidth -this.width/1.2) {
                 this.x += 15
             }
 
@@ -68,7 +68,7 @@ class Human extends PIXI.Sprite {
         };
 
         this.right.release = () => {
-            if (!this.left.isDown && this.x < this.appWidth-this.width) {
+            if (!this.left.isDown && this.x < this.appWidth-this.width/1.2) {
                 this.x += 15
             }
         };

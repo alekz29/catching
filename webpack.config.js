@@ -1,7 +1,6 @@
 'use strict';
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const path = require('path');
 
 const distDir = path.resolve(__dirname, 'dist');
@@ -35,7 +34,6 @@ module.exports = {
 
 
     plugins: [
-      // new CleanWebpackPlugin([distDir]),
         new HtmlWebpackPlugin({
             template: 'static/index.html'
         })
