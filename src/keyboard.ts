@@ -1,6 +1,6 @@
 class Keyboard {
 
-    constructor(public code: number, public isDown = false, public isUp = true, public press: any = undefined, public release: any = undefined) {
+    constructor(public code: number, public isDown = false, public isUp = true, public press: Function = undefined, public release: Function = undefined) {
         this.addEvents()
     }
 
