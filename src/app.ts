@@ -7,6 +7,7 @@ import Sprite = PIXI.Sprite;
 import NewText from './text'
 import Keyboard from "./keyboard";
 import SystemRenderer = PIXI.SystemRenderer;
+import Stage from './stageGame'
 
 class App {
 
@@ -14,16 +15,15 @@ class App {
     static appHeight: number = 600
     static renderer: SystemRenderer = PIXI.autoDetectRenderer(App.appWidth, App.appHeight, {backgroundColor: 0x061639})
     static stage: Container = new PIXI.Container()
-    static beginScene: Container = new Container()
-    static gameScene: Container = new Container()
-    static gameOverScene: Container = new Container();
-    static character: Sprite = new Character('./img/knight iso char_idle_0.png', App.gameScene, App.appWidth)
+    static stageGame = new Stage(App.stage, App.renderer, App.appHeight, App.appWidth)
+    static character: Sprite = new Character('./img/knight iso char_idle_0.png', App.stageGame.gameScene, App.appWidth)
     static spritesList: Array<Fruit> = []
     static life: number = 10
     static points: number = 0
-    static drawPoints: any = new NewText(`${App.points}`, App.gameScene, 100, App.appWidth)
+    static drawPoints: any = new NewText(`${App.points}`, App.stageGame.gameScene, 100, App.appWidth)
     static playInterval: number;
     static playAgain: Keyboard = new Keyboard(32)
+    static textures = new LoadTextures()
 
 
     constructor() {
@@ -34,19 +34,12 @@ class App {
     static initialize() {
 
         document.body.appendChild(App.renderer.view);
-        App.stage.addChild(App.beginScene)
-        new NewText('Press The Spaces', App.beginScene, App.appHeight, App.appWidth)
+        App.stageGame.beginText()
+
 
         App.playAgain.press = () => {
-
-            App.renderer.backgroundColor = 0x1099bb;
-            App.beginScene.visible = false
-            App.stage.addChild(App.gameScene).visible = true;
-            App.stage.addChild(App.gameOverScene).visible = false;
-            new LoadTextures()
-            new NewText('Game Over', App.gameOverScene, App.appHeight, App.appWidth)
+            App.stageGame.play()
             App.createSprites()
-
         }
     }
 
@@ -55,7 +48,7 @@ class App {
         App.playInterval = setInterval(() => {
 
             const id = Math.floor(Math.random() * 30)
-            const newFruit = new Fruit(id, App.gameScene, App.appWidth)
+            const newFruit = new Fruit(id, App.stageGame.gameScene, App.appWidth)
             App.spritesList = newFruit.getList()
 
         }, 2500)
@@ -87,17 +80,14 @@ class App {
         if (App.life <= 0) {
 
             v.visible = false
-            App.gameScene.visible = false;
-            App.gameOverScene.visible = true;
-            App.renderer.backgroundColor = 0x061639;
-            App.drawPoints.text = 0
+            App.stageGame.gameOver()
+            App.drawPoints.text = App.points = 0
+            App.drawPoints.toCenter()
             window.clearInterval(App.playInterval)
 
             App.playAgain.press = () => {
 
-                App.gameScene.visible = true;
-                App.gameOverScene.visible = false;
-                App.renderer.backgroundColor = 0x1099bb;
+                App.stageGame.play()
                 App.life = 10
                 App.character.x = (this.appWidth / 2) - (App.character.width / 2)
                 App.character.texture = PIXI.Texture.fromImage('./img/knight iso char_idle_0.png')
