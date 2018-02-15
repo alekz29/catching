@@ -13,10 +13,14 @@ class newText extends PIXI.Text {
 
         super(t, newText.styles)
 
-        this.x = appWidth / 2 - (this.width / 2)
-        this.y = appHeight / 2 - (this.height / 2)
+        this.toCenter()
         this.parent.addChild(this)
 
+    }
+
+    public toCenter() {
+        this.x = this.appWidth / 2 - (this.width / 2)
+        this.y = this.appHeight / 2 - (this.height / 2)
     }
 }
 

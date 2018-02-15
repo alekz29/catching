@@ -20,6 +20,8 @@ class App {
     static character: Sprite = new Character('./img/knight iso char_idle_0.png', App.gameScene, App.appWidth)
     static spritesList: Array<Fruit> = []
     static life: number = 10
+    static points: number = 0
+    static drawPoints: any = new NewText(`${App.points}`, App.gameScene, 100, App.appWidth)
     static playInterval: number;
     static playAgain: Keyboard = new Keyboard(32)
 
@@ -88,6 +90,7 @@ class App {
             App.gameScene.visible = false;
             App.gameOverScene.visible = true;
             App.renderer.backgroundColor = 0x061639;
+            App.drawPoints.text = 0
             window.clearInterval(App.playInterval)
 
             App.playAgain.press = () => {
@@ -117,7 +120,7 @@ class App {
 
             actualFruit.destroy()
             list.splice(i, 1)
-
+            App.addPoint()
         }
 
         else if (pF.y >= App.appHeight - (App.appHeight - (pCh.y + pCh.height))) {
@@ -127,6 +130,11 @@ class App {
             App.life -= 1
 
         }
+    }
+
+    static addPoint() {
+        App.drawPoints.text = App.points += 100
+        App.drawPoints.toCenter()
     }
 }
 
