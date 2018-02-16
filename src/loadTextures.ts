@@ -3,13 +3,9 @@ import * as PIXI from "pixi.js";
 
 class LoadTexture {
 
-    fruitsImg = PIXI.Texture.fromImage('./img/Food.png')
+    static fruitsImg = PIXI.Texture.fromImage('./img/Food.png')
 
-    constructor() {
-        this.load()
-    }
-
-    load() {
+    static load() {
 
         let position: number = 16,
             i: number = 0,
@@ -20,7 +16,7 @@ class LoadTexture {
             for (let j = 0; j < length; j++) {
 
                 const rectangleNEW = new PIXI.Rectangle(position * i, position * j, position, position),
-                    fruitImg = this.fruitsImg.clone(),
+                    fruitImg = LoadTexture.fruitsImg.clone(),
                     id: number = i === 0 ? j : i * length + j
 
                 fruitImg.frame = rectangleNEW

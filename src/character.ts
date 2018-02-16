@@ -32,7 +32,7 @@ class Character extends PIXI.Sprite {
     constructor(private img: string, parent: Container = null, private appWidth: number) {
         super(PIXI.Texture.fromImage(img))
         this.scale.set(1.5, 1.5)
-        this.x = (this.appWidth / 2) - (85 * 1.4) / 2
+        this.x = (this.appWidth / 2) - (85 * 1.5) / 2
         this.y = 450
         if (parent) {
             parent.addChild(this)
@@ -45,7 +45,7 @@ class Character extends PIXI.Sprite {
             if (Character.indexLeft > 5) {
                 Character.indexLeft = 0
             }
-            if (this.x > 0) {
+            if (this.x > this.appWidth - (this.appWidth + (85) / 5)) {
                 this.x -= 15
             }
 
@@ -55,7 +55,7 @@ class Character extends PIXI.Sprite {
 
         this.left.release = () => {
 
-            if (!this.right.isDown && this.x > 0) {
+            if (!this.right.isDown && this.x > this.appWidth - (this.appWidth + (85) / 5)) {
                 this.x -= 15
             }
 

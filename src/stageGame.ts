@@ -2,6 +2,7 @@ import * as PIXI from "pixi.js";
 import SystemRenderer = PIXI.SystemRenderer;
 import Container = PIXI.Container;
 import NewText from "./text";
+import Sprite = PIXI.Sprite;
 
 
 class stageGame {
@@ -16,7 +17,8 @@ class stageGame {
         stage.addChild(this.gameOverScene).visible = false;
     }
 
-    public beginText() {
+    public begin() {
+        document.body.appendChild(this.renderer.view);
         new NewText('Press The Spaces', this.beginScene, this.appHeight, this.appWidth)
     }
 
@@ -29,7 +31,8 @@ class stageGame {
 
     }
 
-    public gameOver() {
+    public gameOver(sprite: Sprite) {
+        sprite.visible = false
         new NewText('Game Over', this.gameOverScene, this.appHeight, this.appWidth)
         this.renderer.backgroundColor = 0x061639;
         this.beginScene.visible = false;
